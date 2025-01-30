@@ -40,7 +40,7 @@ model Department {
   // Establece un id integer autoincrementable como clave primaria
   id        Int      @id @default(autoincrement())
   name      String   @unique
-  daneCode  Int      @unique
+  daneCode  String      @unique
   isActive  Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -55,7 +55,8 @@ model Department {
 
 model City {
   id        Int      @id @default(autoincrement())
-  name      String   @unique
+  name      String   
+  daneCode  String   @unique
   isActive  Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
