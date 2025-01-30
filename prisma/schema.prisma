@@ -13,14 +13,53 @@ enum ValidRoles {
 }
 
 model User {
-  id    String  @id @default(uuid())
+  id        String       @id @default(uuid())
   firstName String
   lastName  String
-  email  String @unique
-  password String
-  roles  ValidRoles[]
-  isActive Boolean @default(true)
+  email     String       @unique
+  password  String
+  roles     ValidRoles[]
+  isActive  Boolean      @default(true)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Country {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  isoCode   String   @unique
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  departments Department[]
+}
+
+model Department {
+  // Establece un id integer autoincrementable como clave primaria
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  daneCode  Int      @unique
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relación uno a muchos con la tabla country
+  Country   Country? @relation(fields: [countryId], references: [id])
+  countryId Int?
+
+  // Relación uno a muchos con la tabla city
+  cities City[]
+}
+
+model City {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Department   Department? @relation(fields: [departmentId], references: [id])
+  departmentId Int?
 }
